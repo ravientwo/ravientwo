@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Thumbnail Portfolio</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ✅ FIX (overscroll + fallback) */
+html {
+    background: #000;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: #000;
+
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+        url('bg1.png');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+
+/* LOCK SCROLL */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* BLUR BACKGROUND WHEN IMAGE OPEN */
+body.popup-open nav,
+body.popup-open section {
+    filter: blur(8px);
+    transition: 0.3s;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+nav h1 {
+    color: #8b5cf6;
+}
+
+/* ✅ UPDATED BUTTON (same everywhere) */
+.work-btn {
+    background: linear-gradient(135deg, #7b5cff, #9b7bff);
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    
+    /* depth */
+    box-shadow:
+        0 4px 15px rgba(123, 92, 255, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    
+    /* smooth feel */
+    transition: all 0.25s ease;
+}
+
+/* hover (desktop) */
+.work-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 25px rgba(123, 92, 255, 0.5),
+        0 0 12px rgba(155, 123, 255, 0.6);
+}
+
+/* click */
+.work-btn:active {
+    transform: scale(0.97);
+}
+/* HERO */
+.hero {
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    background: linear-gradient(rgba(10,10,20,0.5), rgba(10,10,20,0.85)),
+                url('bg.png');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+
+.hero h2 {
+    font-size: 3rem;
+}
+
+.hero span {
+    color: #8b5cf6;
+}
+
+.hero p {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* KEEP spacing only */
+.hero button {
+    margin-top: 20px;
+}
+
+/* SECTIONS */
+section {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.about {
+    margin-bottom: -30px;
+}   
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.4s;
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 16 / 9;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+}
+
+.about p {
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.skills {
+    margin-top: 15px;
+}
+
+.skills span {
+    display: inline-block;
+    background: #1a1a1a;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 5px;
+    font-size: 0.9rem;
+}
+
+.pricing ul {
+    margin-top: 10px;
+    line-height: 1.8;
+}
+
+/* ✅ CONTACT FIX */
+.contact {
+    text-align: left;
+}
+
+.contact .discord {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #8b5cf6;
+}
+
+/* FADE */
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.8s;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* POPUPS */
+.image-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 3000;
+}
+
+.image-popup.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup-content {
+    text-align: center;
+    background: rgba(20, 20, 40, 0.7);
+    backdrop-filter: blur(20px);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+.popup-content img {
+    max-width: 80vw;
+    border-radius: 12px;
+}
+
+.popup-content h3 {
+    margin-top: 15px;
+}
+
+.popup-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(77, 79, 255, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 2000;
+}
+
+.popup {
+    background: #240A5E;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    transform: scale(0.7);
+    transition: 0.3s;
+}
+
+.popup-bg.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup-bg.active .popup {
+    transform: scale(1);
+}
+
+.close-btn {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #8b5cf6;
+    color: #8b5cf6;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h1>Ravien</h1>
+    <div>
+        <button class="work-btn" onclick="openPopup()">Work With Me</button>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <h2>I Design <span>High-CTR Minecraft Thumbnails</span></h2>
+    <p>Clean visuals. Strong lighting. Thumbnails that get clicks.</p>
+    <p style="font-size: 0.9rem; opacity: 0.6;"></p>
+
+    <button class="work-btn" onclick="scrollToSection()">
+        View Work
+    </button>
+</section>
+
+<section class="about fade-up" id="about">
+    <h2>What I Do</h2>
+    <p>I create Minecraft thumbnails focused on clarity, contrast, and clickability.</p>
+    <p>I don’t just decorate thumbnails — I design them to perform.</p>
+</section>
+
+<section id="portfolio">
+    <h2 class="fade-up">A selection of my best work focused on CTR and clarity</h2>
+
+    <div class="grid">
+        <div class="card fade-up" onclick="openImage(this, 'Thumbnail 1')"><img src="work1.png"></div>
+        <div class="card fade-up" onclick="openImage(this, 'Thumbnail 2')"><img src="work2.png"></div>
+        <div class="card fade-up" onclick="openImage(this, 'Thumbnail 3')"><img src="work3.jpg"></div>
+        <div class="card fade-up" onclick="openImage(this, 'Thumbnail 4')"><img src="work4.png"></div>
+    </div>
+</section>
+
+<section class="pricing fade-up" id="pricing">
+    <h2>Pricing</h2>
+    <p>Flexible pricing based on detail, effects, and turnaround.</p>
+
+    <ul>
+        <li>$3 » Basic – Clean thumbnail, simple lighting</li>
+        <li>$5 » Advanced – Full effects, glow, detailed composition</li>
+    </ul>
+</section>
+
+<section class="contact" id="contact">
+    <h2 class="fade-up">Let’s Work</h2>
+    <p class="fade-up">Need a thumbnail that stands out?</p>
+
+    <p class="discord fade-up">💬 Discord: @ravientwo</p>
+</section>
+
+<!-- IMAGE POPUP -->
+<div class="image-popup" id="imgPopup" onclick="closeImage(event)">
+    <div class="popup-content">
+        <img id="popupImg">
+        <h3 id="popupTitle"></h3>
+    </div>
+</div>
+
+<!-- ORIGINAL POPUP -->
+<div class="popup-bg" id="popup">
+    <div class="popup">
+        <h2>Let’s Work</h2>
+        <p style="margin-top:10px;">Reach out on Discord:</p>
+        <p style="margin-top:10px; font-weight:bold; color:#8b5cf6;">
+            ravientwo
+        </p>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+</div>
+
+<script>
+function scrollToSection() {
+    document.getElementById("portfolio").scrollIntoView({ behavior: "smooth" });
+}
+
+const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("show");
+        else entry.target.classList.remove("show");
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+function openPopup() {
+    document.getElementById("popup").classList.add("active");
+}
+
+function closePopup() {
+    document.getElementById("popup").classList.remove("active");
+}
+
+function openImage(el, title) {
+    document.getElementById("imgPopup").classList.add("active");
+    document.body.classList.add("no-scroll");
+    document.body.classList.add("popup-open");
+
+    document.getElementById("popupImg").src = el.querySelector("img").src;
+    document.getElementById("popupTitle").innerText = title;
+}
+
+function closeImage(e) {
+    if (e.target.id === "imgPopup") {
+        document.getElementById("imgPopup").classList.remove("active");
+        document.body.classList.remove("no-scroll");
+        document.body.classList.remove("popup-open");
+    }
+}
+</script>
+
+</body>
+</html>
