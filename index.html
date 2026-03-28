@@ -3,20 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minecraft Thumbnail Portfolio</title>
-
-<!-- Open Graph (Discord, WhatsApp, etc) -->
-<meta property="og:title" content="Ravien – Minecraft Thumbnail Designer">
-<meta property="og:description" content="High-CTR Minecraft thumbnails. Clean visuals. Strong lighting. Designed to get clicks.">
-<meta property="og:image" content="https://ravien.vercel.app/67.png">
-<meta property="og:url" content="https://ravien.vercel.app/">
-<meta property="og:type" content="website">
-
-<!-- Twitter (optional but good) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ravien – Minecraft Thumbnail Designer">
-<meta name="twitter:description" content="High-CTR Minecraft thumbnails designed to get clicks.">
-<meta name="twitter:image" content="https://ravien.vercel.app/67.png">
+<title>Portfolio</title>
 
 <style>
 * {
@@ -322,7 +309,7 @@ h2 {
 </nav>
 
 <section class="hero" id="home">
-    <h2>I Design <span>High-CTR Minecraft Thumbnails</span></h2>
+    <h2>I Design <span>Minecraft Thumbnails</span></h2>
     <p>Clean visuals. Strong lighting. Thumbnails that get clicks.</p>
     <p style="font-size: 0.9rem; opacity: 0.6;"></p>
 
@@ -332,13 +319,13 @@ h2 {
 </section>
 
 <section class="about fade-up" id="about">
-    <h2>What I Do</h2>
-    <p>I create Minecraft thumbnails focused on clarity, contrast, and clickability.</p>
-    <p>I don’t just decorate thumbnails — I design them to perform.</p>
+      <h2>What I actually do</h2>
+    <p>I design Minecraft thumbnails that are easy to read at a glance and hard to ignore.</p>
+    <p>No random effects, no over editing  just clean composition and a clear subject.</p>
 </section>
 
 <section id="portfolio">
-    <h2 class="fade-up">A selection of my best work focused on CTR and clarity</h2>
+    <h2 class="fade-up">Some of the thumbnail i've done:</h2>
 
     <div class="grid">
         <div class="card fade-up" onclick="openImage(this, 'Thumbnail 1')"><img src="work1.png"></div>
@@ -349,11 +336,11 @@ h2 {
 </section>
 
 <section class="pricing fade-up" id="pricing">
-    <h2>Pricing</h2>
-    <p>Flexible pricing based on detail, effects, and turnaround.</p>
-
+        <h2>Pricing</h2>
+    <p>Simple pricing depending on how detailed you want it.</p>
+    
     <ul>
-        <li>$3 » Basic – Clean thumbnail, simple lighting</li>
+        <li>$2 » Basic – Clean thumbnail, simple lighting</li>
         <li>$5 » Advanced – Full effects, glow, detailed composition</li>
     </ul>
 </section>
@@ -400,7 +387,7 @@ const fadeObserver = new IntersectionObserver(entries => {
 document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
 
 function openPopup() {
-    window.open("https://discord.com/users/1110920038044684358", "_blank");
+    document.getElementById("popup").classList.add("active");
 }
 
 function closePopup() {
